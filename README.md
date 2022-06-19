@@ -57,7 +57,7 @@ If everything is good, you'll see the following message:
 
 > Everything is working correctly!
 
-If you have any issues setting up, send us a message on our (community's)[https://ploomber.io/community] `#ask-anything` channel.
+If you have any issues setting up, send us a message on our [community's](https://ploomber.io/community) `#ask-anything` channel.
 
 ## Content
 
