@@ -6,7 +6,15 @@
 
 Facilitators: Eduardo Blancas and Ido Michael
 
+*Please follow the setup instructions before the workshop*. If you have any issues, send us a [message on Slack](https://ploomber.io/community)
+
+
 ## Setup instructions
+
+* Ensure you have a GitHub account
+* Fork this repository (click on fork in the upper right button)
+
+### Local environment setup
 
 If using [conda](https://www.google.com/search?q=miniconda):
 

@@ -1,8 +1,3 @@
-pre setup:
-
-* github account
-* fork this repo
-
 ## Block 1
 
 ### 1.1 Refactoring a legacy notebook
@@ -193,7 +188,7 @@ jobs:
 
 ### Collaboration using Pull Requests on GitHub
 
-TODO: ipynb git diff
+![github-diff](static/github-diff.png)
 
 ## Block 4
 
@@ -237,8 +232,6 @@ Free tier with limited computing. [Instruction to get an API key.](https://docs.
 
 ## Learn more
 
-* Python API - link to docs
-
-```python
-
-```
+* Documentation
+* GitHub repository
+* Community
