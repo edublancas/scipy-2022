@@ -1,0 +1,6 @@
+ploomber
+soorgeon
+soopervisor
+scikit-learn
+seaborn
+matplotlib
