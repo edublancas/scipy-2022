@@ -1,4 +1,14 @@
-## Block 1
+## Block 1: Introduction to Ploomber
+
+8:00 - 9:00
+
+> We'll motivate the project and explain why investing in organizing our project as a modular pipeline (multiple scripts/notebooks) instead of a big script/notebook helps us develop faster and enhances collaboration.
+
+
+### Before we start...
+
+Let's check your setup
+
 
 ### 1.1 Refactoring a legacy notebook
 
@@ -7,20 +17,21 @@ cd material/1.1
 soorgeon refactor notebook.ipynb --df-format parquet
 ```
 
+Open [material/1.1/pipeline.html](material/1.1/pipeline.html)
+
 ```sh
 cd material/1.1
 ploomber plot --backend d3
 ```
 
-* Open [material/1.1/pipeline.html](material/1.1/pipeline.html)
-* Open [material/1.1/pipeline.yaml](material/1.1/pipeline.yaml)
+Open [material/1.1/pipeline.yaml](material/1.1/pipeline.yaml)
 
 
-### The `pipeline.yaml` file
+### 1.2 The `pipeline.yaml` file
 
 The `pipeline.yaml` file is where we declare the tasks in our pipeline. `soorgeon refactor` generated one for us since we refactored an existing notebook, but if we were to start a project from scratch we'd create it manually:
 
-```python
+```sh
 from pathlib import Path
 from IPython.display import Markdown
 
@@ -35,11 +46,8 @@ def display(path):
 display('material/1.1/pipeline.yaml')
 ```
 
-<!-- #region -->
 
-
-### The command-line interface
-<!-- #endregion -->
+### 1.2 The command-line interface
 
 ```sh
 ploomber --help
