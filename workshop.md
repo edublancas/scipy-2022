@@ -293,7 +293,8 @@ Example:
 
 - source: tasks/load.py
   product:
-    nb: output/load.ipynb    
+    nb: output/load.ipynb
+    df: output/load.parquet
   on_finish: data_quality.no_nas
 ```
 
