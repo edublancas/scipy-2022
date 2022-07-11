@@ -438,8 +438,8 @@ jobs:
           pip install -r requirements.txt
       - name: Unit tests
         run: |
-          cd material
           ploomber build --env--sample true
+        working-directory: material
 ```
 
 **Exercise 6:** Add the contents of the code snippet above to `.github/workflows/testing.yaml`, and push to GitHub, then check that your pipeline passes.

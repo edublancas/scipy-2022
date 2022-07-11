@@ -17,5 +17,5 @@ jobs:
           pip install -r requirements.txt
       - name: Run pipeline
         run: |
-          cd solutions/ex-5
           ploomber build --env--sample true
+        working-directory: solutions/ex-5
