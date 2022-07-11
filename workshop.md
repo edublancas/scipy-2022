@@ -201,7 +201,7 @@ Static `param`:
     sample: true
 ```
 
-**Exercise 1:** Modify `material/pipeline.yaml` and add a parameter to the `material/tasks/load.ipynb` notebook (under the `params` section), then add a new cell to the notebook to print the value of the parameter. Then, execute the following and check if the output notebook (`material/output/load.ipynb`) prints the right value:
+**Exercise 1:** Modify `material/pipeline.yaml` and add a parameter to the `material/tasks/load.py` notebook (under the `params` section), then add a new cell to the notebook to print the value of the parameter. Then, execute the following and check if the output notebook (`material/output/load.ipynb`) prints the right value:
 <!-- #endregion -->
 
 ```sh
@@ -270,7 +270,7 @@ ploomber task --env-sample false
 ploomber scaffold
 ```
 
-**Exercise 3**: Add a new `tasks/fit.ipynb` notebook, then execute `ploomber scaffold` (inside the `material` directory) to create the notebook. Finally, add the code from `tasks/linear-regression.ipynb`.
+**Exercise 3**: Add a new `tasks/fit.py` notebook, then execute `ploomber scaffold` (inside the `material` directory) to create the notebook. Finally, add the code from `tasks/linear-regression.py`.
 
 ### 2.2 Incremental builds
 
@@ -278,7 +278,7 @@ ploomber scaffold
 
 ![incremental](static/incremental.png)
 
-**Exercise 4**: Add a print statement to `tasks/fit.ipynb` (or any other task) and execute `ploomber build`. Verify that only that task (and any downstream) ones are executed.
+**Exercise 4**: Add a print statement to `tasks/fit.py` (or any other task) and execute `ploomber build`. Verify that only that task (and any downstream) ones are executed.
 
 ### 2.3 Adding data quality tests
 
@@ -317,6 +317,8 @@ def no_nas(product):
 
 [Documentation](https://docs.ploomber.io/en/latest/user-guide/debugging.html)
 
+**Exercise:** Add the following line to the `material/tasks/load.py` file:
+
 * Looking at crashed notebook
 * Using `task.debug()`
 * post-mortem `ploomber build --debug`
@@ -352,11 +354,11 @@ jobs:
           python-version: 3.9
       - name: Install dependencies
         run: |
-          cd material
           pip install -r requirements.txt
       - name: Unit tests
         run: |
-          ploomber build --env-sample true
+          cd material
+          ploomber build --env--sample true
 ```
 
 **Exercise 6:** Add the contents of the code snippet above to `.github/workflows/testing.yaml`, and push to GitHub, then check that your pipeline passes.
@@ -410,7 +412,7 @@ module = importlib.import_module(module_name)
 lr = getattr(module, attribute)
 ```
 
-**Exercise 8:** Switch to the `parallel` executor and create a `fit.ipynb` task to train many models at the same time.
+**Exercise 8:** Switch to the `parallel` executor and create a `tasks/fit.py` task to train many models at the same time.
 
 ### 4.2 Execution in distributed environments
 

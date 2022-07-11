@@ -18,4 +18,4 @@ jobs:
       - name: Unit tests
         run: |
           cd solutions/ex-5
-          ploomber build --env-sample true
+          ploomber build --env--sample true
