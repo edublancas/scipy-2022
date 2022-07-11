@@ -14,7 +14,15 @@ Facilitators: Eduardo Blancas and Ido Michael
 * Ensure you have a GitHub account
 * Fork this repository (click on fork in the upper right button)
 
-### Local environment setup
+### Option 1. Local environment setup
+
+Clone your fork:
+
+```sh
+# clone the repo (change for your username)
+git clone https://github.com/{your-username}/scipy-2022
+cd scipy-2022
+```
 
 If using [conda](https://www.google.com/search?q=miniconda):
 
@@ -45,6 +53,21 @@ pip install -r requirements.txt
 *Note:* If using Windows, the command to activate the environment is different, [click here](https://docs.python.org/3/library/venv.html) and scroll down, you'll find a table with the command to run depending on your system.
 
 
+### Option 2. Hosted JupyterLab
+
+To simplify setup, we're offering a hosted JupyterLab.
+
+[Register here](https://docs.ploomber.io/en/latest/cloud/api-key.html). Then, access [JupyterLab here.](https://docs.ploomber.io/en/latest/cloud/guide.html#hosted-jupyterlab)
+
+
+Once JupyterLab starts, clone your forked repository:
+
+```sh
+# clone the repo (change for your username)
+git clone https://github.com/{your-username}/scipy-2022
+cd scipy-2022
+```
+
 ## Testing setup
 
 To check your setup, run (it may take a few seconds):
@@ -61,4 +84,4 @@ If you have any issues setting up, send us a message on our [community's](https:
 
 ## Content
 
-See the [`instructions.md`](instructions.md) file.
+See the [`workshop.md`](workshop.md) file.
