@@ -1,0 +1,35 @@
+executor: parallel
+
+tasks:
+
+- source: tasks/load.py
+  product:
+    df: output/load-df.parquet
+    nb: output/load.ipynb
+  params:
+    sample: '{{sample}}'
+  on_finish: data_quality.no_nas
+
+- source: tasks/clean.py
+  product:
+    df: output/clean-df.parquet
+    nb: output/clean.ipynb
+
+- source: tasks/train-test-split.py
+  product:
+    y_test: output/train-test-split-y_test.pkl
+    X_train: output/train-test-split-X_train.pkl
+    y_train: output/train-test-split-y_train.pkl
+    X_test: output/train-test-split-X_test.pkl
+    nb: output/train-test-split.ipynb
+
+- source: tasks/fit.py
+  name: fit-
+  product:
+    nb: output/fit.ipynb
+  grid:
+    model:
+      - sklearn.linear_model.LinearRegression
+      - sklearn.svm.SVR
+      - sklearn.ensemble.GradientBoostingRegressor
+      - sklearn.ensemble.RandomForestRegressor
