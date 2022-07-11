@@ -1,3 +1,5 @@
+# content of .github/workflows/testing.yaml
+
 name: Test
 
 on: [push, pull_request]
@@ -15,7 +17,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-      - name: Run pipeline
+      - name: Unit tests
         run: |
-          cd solutions/ex-5
+          cd material
           ploomber build --env--sample true
