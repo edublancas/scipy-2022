@@ -88,7 +88,7 @@ python check.py
 
 ```sh
 cd material
-soorgeon refactor notebook.ipynb --df-format parquet
+soorgeon refactor notebook.ipynb --df-format parquet --file-format py
 ```
 
 Open [material/pipeline.yaml](material/pipeline.yaml)
@@ -166,11 +166,15 @@ dag.status()
 
 **JupyterLab:**
 
-No need to do anything else, the plugin is automatically installed and configured.
+No need to do anything else, the plugin is automatically installed and configured. `.py` files should open as notebooks automatically, if they don't, right click on them and click on *Open with Notebook*:
+
+![open-with-notebook](static/lab-open-with-notebook.png)
 
 [Documentation](https://docs.ploomber.io/en/latest/user-guide/jupyter.html)
 
 **Other editors (VSCode, PyCharm, Spyder)**
+
+Run this to inject the cell manually (and run it again if you modify your `pipeline.yaml`):
 
 ```sh
 ploomber nb --inject
@@ -197,7 +201,7 @@ Static `param`:
     sample: true
 ```
 
-**Exercise 1:** Add a parameter to the `material/tasks/load.ipynb` notebook, then add a new cell to the notebook to print the value of the parameter. Then, execute the following and check if the output notebook (`material/output/load.ipynb`) prints the right value:
+**Exercise 1:** Modify `material/pipeline.yaml` and add a parameter to the `material/tasks/load.ipynb` notebook (under the `params` section), then add a new cell to the notebook to print the value of the parameter. Then, execute the following and check if the output notebook (`material/output/load.ipynb`) prints the right value:
 <!-- #endregion -->
 
 ```sh
@@ -250,11 +254,7 @@ ploomber task --env-sample false
 
 9:10 - 10:10
 
-### 2.1 Smoke testing
-
-> When editing notebooks, we may add, remove, or change the order of our code cells, breaking our code; preventing the reproducibility of our results. Here we introduce the concept of smoke testing and apply it to our pipeline. We demonstrate how this low-effort action can dramatically speed up iteration speed and help us check if our code is reproducible.
-
-### 2.2 Adding new tasks
+### 2.1 Adding new tasks
 
 > We demonstrate how to add new tasks to our existing pipeline and establish the dependency relations among tasks.
 
@@ -272,7 +272,7 @@ ploomber scaffold
 
 **Exercise 3**: Add a new `tasks/fit.ipynb` notebook, then execute `ploomber scaffold` (inside the `material` directory) to create the notebook. Finally, add the code from `tasks/linear-regression.ipynb`.
 
-### 2.3 Incremental builds
+### 2.2 Incremental builds
 
 >  Data analysis is an iterative process, and we often make small changes and rerun the code to see how that affects our results. We'll show how incremental builds allow users to run more experiments faster by caching previous results.
 
@@ -280,15 +280,38 @@ ploomber scaffold
 
 **Exercise 4**: Add a print statement to `tasks/fit.ipynb` (or any other task) and execute `ploomber build`. Verify that only that task (and any downstream) ones are executed.
 
-### 2.4 Adding data quality tests
+### 2.3 Adding data quality tests
 
 > Here we improve our testing strategy. We demonstrate how to use Ploomber to add data quality tests to each task in our pipeline. These tests serve as sanity checks to ensure each output produces high-quality data.
 
 ![testing](static/testing.png)
 
-**Exercise 5:** Add a data quality test that checks that the output of the `tasks/load.ipynb` notebook does not contain NAs in the `MedHouseVal` column.
+Example:
 
-### 2.5 Debugging
+```yaml
+# content of pipeline.yaml
+
+- source: tasks/load.py
+  product:
+    nb: output/load.ipynb    
+  on_finish: data_quality.no_nas
+```
+
+Data quality test:
+
+```python
+# content of data_quality.py
+import pandas as pd
+
+def no_nas(product):
+    df = pd.read_parquet(product['df'])
+
+    assert not df.MedHouseVal.isna().sum()
+```
+
+**Exercise 5:** Add a `data_quality.py` to check that the output of the `tasks/load.ipynb` notebook does not contain NAs in the `MedHouseVal` column.
+
+### 2.4 Debugging
 
 > This section will show Ploomber's debugging capabilities, which allows us to debug our pipelines when they fail.
 
@@ -329,6 +352,7 @@ jobs:
           python-version: 3.9
       - name: Install dependencies
         run: |
+          cd material
           pip install -r requirements.txt
       - name: Unit tests
         run: |
@@ -365,13 +389,25 @@ executor: parallel
 tasks:
   # ... more tasks here
 
-  - source: tasks/fit.ipynb
-    product:
-      nb: output/fit.ipynb
-    grid:
-      # total tasks: 4 x 4 = 16
-      param_a: [1, 2, 3, 4]
-      param_b: [10, 20, 30, 40]
+- source: tasks/fit.py
+  name: fit-
+  product:
+    nb: output/fit.ipynb
+  grid:
+    model:
+      - sklearn.linear_model.LinearRegression
+      - sklearn.svm.SVR
+      - sklearn.ensemble.GradientBoostingRegressor
+      - sklearn.ensemble.RandomForestRegressor
+```
+
+Snippet to initialize models from a string:
+
+```python
+import importlib
+module_name, _, attribute = model.rpartition('.')
+module = importlib.import_module(module_name)
+lr = getattr(module, attribute)
 ```
 
 **Exercise 8:** Switch to the `parallel` executor and create a `fit.ipynb` task to train many models at the same time.
@@ -394,6 +430,45 @@ Supported platforms (open-source):
 
 [Instruction to get an API key.](https://docs.ploomber.io/en/latest/cloud/api-key.html)
 
+Store key:
+
+```sh
+ploomber cloud set-key {KEY}
+```
+
+Run in the cloud:
+
+```sh
+ploomber cloud build
+```
+
+Check that your pipeline is scheduled:
+
+```sh
+ploomber cloud list
+```
+
+Check logs:
+
+```sh
+ploomber cloud logs {run-id} --image --watch
+```
+
+```sh
+ploomber cloud logs {run-id} --watch
+```
+
+Check task status:
+
+```sh
+ploomber cloud status {run-id} --watch
+```
+
+Download outputs:
+
+```sh
+ploomber cloud download '*'
+```
 
 **Exercise 9:** Execute your pipeline in the cloud.
 <!-- #endregion -->
