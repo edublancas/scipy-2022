@@ -1,0 +1,21 @@
+name: Test
+
+on: [push, pull_request]
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+      - name: Unit tests
+        run: |
+          cd solutions/ex-5
+          ploomber build --env-sample true
