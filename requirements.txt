@@ -4,3 +4,4 @@ soopervisor
 scikit-learn
 seaborn
 matplotlib
+pyarrow
