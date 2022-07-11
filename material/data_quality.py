@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ---
 # jupyter:
 #   kernelspec:
@@ -29,9 +30,16 @@ product = None
 
 # %%
 # your code here...
+=======
+# content of data_quality.py
+>>>>>>> e360e5ad0447299d5cfa5b5b1008d8287b1acaa7
 import pandas as pd
 
 def no_nas(product):
     df = pd.read_parquet(product['df'])
+<<<<<<< HEAD
 
+=======
+    raise ValueError
+>>>>>>> e360e5ad0447299d5cfa5b5b1008d8287b1acaa7
     assert not df.MedHouseVal.isna().sum()

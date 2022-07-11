@@ -242,7 +242,7 @@ ploomber task load --force
 
 ```sh
 cd material
-ploomber task --env-sample false
+ploomber task --env--sample false load
 ```
 
 <!-- #region -->
@@ -293,7 +293,8 @@ Example:
 
 - source: tasks/load.py
   product:
-    nb: output/load.ipynb    
+    nb: output/load.ipynb
+    df: output/load.parquet
   on_finish: data_quality.no_nas
 ```
 
@@ -438,8 +439,8 @@ jobs:
           pip install -r requirements.txt
       - name: Unit tests
         run: |
-          cd material
           ploomber build --env--sample true
+        working-directory: material
 ```
 
 **Exercise 6:** Add the contents of the code snippet above to `.github/workflows/testing.yaml`, and push to GitHub, then check that your pipeline passes.
