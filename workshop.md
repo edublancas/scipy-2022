@@ -1,5 +1,6 @@
 ## Block 1: Introduction to Ploomber
 
+
 8:00 - 9:00
 
 > We'll motivate the project and explain why investing in organizing our project as a modular pipeline (multiple scripts/notebooks) instead of a big script/notebook helps us develop faster and enhances collaboration.
