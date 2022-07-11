@@ -317,7 +317,7 @@ def no_nas(product):
 
 [Documentation](https://docs.ploomber.io/en/latest/user-guide/debugging.html)
 
-**Exercise:** Add the following cell at the end of the `material/tasks/load.py` file:
+**Exercise:** Add the following cell at the beginning of the `material/tasks/load.py` file:
 
 ```python
 def divide(x, y):
@@ -342,12 +342,65 @@ To debug interactively, run the following in a terminal:
 ploomber interact
 ```
 
-Once it loads:
+Once it loads, start the debugger with:
 
 
 ```python
 dag['load'].debug()
 ```
+
+(to restart at any point, type `quit` and press the Enter key)
+
+Move to the next line by entering `next` and pressing the Enter key. The debugger remembers the last command so to move to the next line, press Enter again, press it a few times until you see this:
+
+```pytb
+     65 # %%
+     66 def divide(x, y):
+     67     return x / y
+     68
+---> 69 divide(1, 0)
+```
+
+Type `step` and then press the Enter key. You'll see this:
+
+```pytb
+     64
+     65 # %%
+---> 66 def divide(x, y):
+     67     return x / y
+     68
+```
+
+Type `next` and press the Enter key two times, you'll see this:
+
+```pytb
+     65 # %%
+     66 def divide(x, y):
+---> 67     return x / y
+     68
+     69 divide(1, 0)
+```
+
+Now you can print the values of `x` and `y`:
+
+```pytb
+     65 # %%
+     66 def divide(x, y):
+---> 67     return x / y
+     68
+     69 divide(1, 0)
+
+ipdb> x
+1
+ipdb> y
+0
+```
+
+Type `quit` and press the Enter key.
+
+Delete the `divide(1, 0)` line in your `material/output/load.ipynb`
+
+[Debugger documentation](https://docs.python.org/3/library/pdb.html)
 <!-- #endregion -->
 
 <!-- #region -->
