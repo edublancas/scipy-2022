@@ -193,7 +193,7 @@ Static `param`:
 ```yaml
 # content of pipeline.yaml
 
-- source: tasks/load.ipynb
+- source: tasks/load.py
   product:
     df: output/load-df.parquet
     nb: output/load.ipynb
@@ -215,7 +215,7 @@ Convert `param` into a placeholder:
 ```yaml
 # content of pipeline.yaml
 
-- source: tasks/load.ipynb
+- source: tasks/load.py
   product:
     df: output/load-df.parquet
     nb: output/load.ipynb
@@ -309,7 +309,7 @@ def no_nas(product):
     assert not df.MedHouseVal.isna().sum()
 ```
 
-**Exercise 5:** Add a `data_quality.py` to check that the output of the `tasks/load.ipynb` notebook does not contain NAs in the `MedHouseVal` column.
+**Exercise 5:** Add a `data_quality.py` to check that the output of the `tasks/load.py` notebook does not contain NAs in the `MedHouseVal` column.
 
 ### 2.4 Debugging
 
@@ -317,12 +317,40 @@ def no_nas(product):
 
 [Documentation](https://docs.ploomber.io/en/latest/user-guide/debugging.html)
 
-**Exercise:** Add the following line to the `material/tasks/load.py` file:
+**Exercise:** Add the following cell at the end of the `material/tasks/load.py` file:
 
-* Looking at crashed notebook
-* Using `task.debug()`
-* post-mortem `ploomber build --debug`
+```python
+def divide(x, y):
+    return x / y
 
+divide(1, 0)
+```
+
+Then execute (this will crash):
+<!-- #endregion -->
+
+```sh
+ploomber build
+```
+
+<!-- #region -->
+You'll be able to look at the crashed notebook at `material/output/load.ipynb`
+
+To debug interactively, run the following in a terminal:
+
+```sh
+ploomber interact
+```
+
+Once it loads:
+
+
+```python
+dag['load'].debug()
+```
+<!-- #endregion -->
+
+<!-- #region -->
 ### 10-minute break
 
 10:10 - 10:20
