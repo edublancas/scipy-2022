@@ -52,6 +52,11 @@ pip install -r requirements.txt
 
 *Note:* If using Windows, the command to activate the environment is different, [click here](https://docs.python.org/3/library/venv.html) and scroll down, you'll find a table with the command to run depending on your system.
 
+To start JupyterLab locally:
+
+```sh
+jupyter lab
+```
 
 ### Option 2. Hosted JupyterLab
 
@@ -79,6 +84,7 @@ python check.py
 If everything is good, you'll see the following message:
 
 > Everything is working correctly!
+
 
 If you have any issues setting up, send us a message on our [community's](https://ploomber.io/community) `#ask-anything` channel.
 
